@@ -33,12 +33,16 @@ get_info(){
 ini_cloud(){
     cloud_path=$(locate cloudflared | grep -Pv '/[^/]+\.[^/]+$')
     cloud_dir=$(dirname "$cloud_path")
+    cloud_path=$(basename "$cloud_path")
     
     cd "$cloud_dir" && rm -f .cld.log > /dev/null 2>&1
+
+echo "ok"
+    
     if [[ $(command -v termux-chroot) ]]; then
-        termux-chroot cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
+        termux-chroot "$cloud_path" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     else
-        cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
+        "$cloud_path" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     fi
     sleep 10
     fkurl=$(grep -o "https://[a-zA-Z0-9]*\.trycloudflared.com" ".cld.log")
