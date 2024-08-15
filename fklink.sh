@@ -81,7 +81,7 @@ mkdir -p .server
 
 proc=(php cloudflared)
 for process in ${proc}; do
-    if [[ pidof ${process} ]]; then
+    if [[ $(pidof ${process}) ]]; then
     killall ${process} > /dev/null 2>&1
     fi
 done
