@@ -42,7 +42,7 @@ ini_cloud(){
        sleep 2 && ./cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1 &
     fi
     sleep 10
-    fkurl=$(grep -o "https://[a-zA-Z0-9]*\.trycloudflared.com" ".cld.log")
+    fkurl=$(grep -o "https://[-0-9a-z]*\.trycloudflared.com" ".cld.log")
     echo "$fkurl"
 
 }
