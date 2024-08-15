@@ -89,6 +89,7 @@ else
 
     elif [[ "$arch" == *"x86_64"* ]]; then
        download "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64"
+    fi
 fi
 
 echo -n "Insert a valid url like 'https://anything.com': "
