@@ -30,6 +30,7 @@ get_info(){
     echo "$info" | jq .
 }
 
+
 ini_cloud(){
     cloud_path=$(locate cloudflared | grep -Pv '/[^/]+\.[^/]+$')
     cloud_dir=$(dirname "$cloud_path")
@@ -42,7 +43,7 @@ ini_cloud(){
        sleep 2 && ./cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1 &
     fi
     sleep 10
-    fkurl=$(grep -o "https://[-0-9a-z]*\.trycloudflared.com" ".cld.log")
+    fkurl=$(grep -o "https://[-0-9a-z]*\.trycloudflare.com" ".cld.log")
     echo "$fkurl"
 
 }
