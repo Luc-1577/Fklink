@@ -44,7 +44,7 @@ ini_cloud(){
     fi
     sleep 10
     fkurl=$(grep -o "https://[-0-9a-z]*\.trycloudflare.com" ".cld.log")
-    echo "$fkurl"
+    echo "$host $port"
 
 }
 
