@@ -37,9 +37,9 @@ ini_cloud(){
     
     cd "$cloud_dir" && rm -f .cld.log > /dev/null 2>&1
     if [[ $(command -v termux-chroot) ]]; then
-        termux-chroot "$cloud_base" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
+        sleep 2 && termux-chroot "$cloud_base" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     else
-        "$cloud_base" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
+       sleep 2 && "$cloud_base" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     fi
     sleep 10
     fkurl=$(grep -o "https://[a-zA-Z0-9]*\.trycloudflared.com" ".cld.log")
@@ -78,6 +78,14 @@ host='127.0.0.1'
 port='8080'
 mkdir -p .server
 
+
+proc=(php cloudflared)
+for process in ${proc}; do
+    if [[ pidof ${process} ]]; then
+    killall ${process} > /dev/null 2>&1
+    fi
+done
+
 if locate cloudflared > /dev/null 2>&1; then
     :
 else
@@ -96,7 +104,7 @@ fi
 
 echo -n "Insert a valid url like 'https://anything.com': "
 read msk
-if [[ "$msk" != http://*.com* ]] || [[ "$msk" != https://*.com* ]]; then
+if [[ "$msk" != http://* ]] || [[ "$msk" != https://* ]]; then
     msk="https://$msk.com"
 fi
 
