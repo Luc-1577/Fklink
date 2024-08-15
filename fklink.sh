@@ -109,10 +109,9 @@ if [[ "$msk" != http://* ]] || [[ "$msk" != https://* ]]; then
 fi
 
 cd .server && rm -f ip.php
-echo "ok"
 make_php "$msk"
-echo "ko"
 php -S "$host":"$port" > /dev/null 2>&1
+echo "ko"
 ini_cloud
 cd "$loc"
 req=$(curl -s https://is.gd/create.php\?format\=simple\&url\=${fkurl})
