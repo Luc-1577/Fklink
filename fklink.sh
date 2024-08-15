@@ -36,14 +36,13 @@ ini_cloud(){
     cloud_path=$(basename "$cloud_path")
     
     cd "$cloud_dir" && rm -f .cld.log > /dev/null 2>&1
-
-echo "ok"
     
     if [[ $(command -v termux-chroot) ]]; then
         termux-chroot "$cloud_path" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     else
         "$cloud_path" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     fi
+    echo "10"
     sleep 10
     fkurl=$(grep -o "https://[a-zA-Z0-9]*\.trycloudflared.com" ".cld.log")
 }
