@@ -97,10 +97,9 @@ read msk
 if [[ "$msk" != http://*.com* ]] || [[ "$msk" != https://*.com* ]]; then
     msk="https://$msk.com"
 fi
-echo "$msk"
 
 cd .server && rm -f ip.php
-make_php msk
+make_php "$msk"
 php -S "$host":"$port" > /dev/null 2>&1
 ini_cloud
 cd "$loc"
