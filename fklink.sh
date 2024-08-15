@@ -33,7 +33,7 @@ get_info(){
 ini_cloud(){
     cloud_path=$(locate cloudflared)
     cloud_dir=$(dirname "$cloud_path")
-    cd "$cloud_dir" && rm .cld.log > /dev/null 2>&1
+    cd "$cloud_dir" && rm -f .cld.log > /dev/null 2>&1
     if [[ $(command -v termux-chroot) ]]; then
         termux-chroot cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     else
