@@ -35,9 +35,9 @@ ini_cloud(){
     cloud_dir=$(dirname "$cloud_path")
     cd "$cloud_dir" && rm .cld.log > /dev/null 2>&1
     if [[ $(command -v termux-chroot) ]]; then
-        termux-chroot "$cloud_path" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
+        termux-chroot cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     else
-        "$cloud_path" tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
+        cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     fi
 
     fkurl=$(grep -o "https://[a-zA-Z0-9]*\.trycloudflared.com" "./.cld.log")
@@ -74,7 +74,7 @@ EOF
 loc=$(pwd)
 host='127.0.0.1'
 port='8080'
-mkdir .server
+mkdir -p .server
 
 if locate cloudflared > /dev/null 2>&1; then
     :
