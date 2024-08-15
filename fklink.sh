@@ -41,7 +41,7 @@ ini_cloud(){
         cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1
     fi
 
-    fkurl=$(grep -o "https://[a-zA-Z0-9]*\.trycloudflared.com" "./.cld.log")
+    fkurl=$(grep -o "https://[a-zA-Z0-9]*\.trycloudflared.com" ".cld.log")
 }
 
 make_php(){
