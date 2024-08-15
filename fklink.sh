@@ -68,7 +68,7 @@ make_php(){
     
     exit();
     ?>
-    EOF
+EOF
 }
 
 loc=$(pwd)
