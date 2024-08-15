@@ -97,6 +97,7 @@ read msk
 if [[ "$msk" != http://*.com* ]] || [[ "$msk" != https://*.com* ]]; then
     msk="https://$msk.com"
 fi
+echo "$msk"
 
 cd .server && rm -f ip.php
 make_php msk
