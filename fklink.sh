@@ -40,7 +40,7 @@ ini_cloud(){
     if [[ $(command -v termux-chroot) ]]; then
         sleep 2 && termux-chroot ./cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1 &
     else
-       sleep 2 && ./cloudflared tunnel -url "$host":"$port" --logfile .cld.log > /dev/null 2>&1 &
+       sleep 2 && ./cloudflared tunnel --url "$host":"$port" --logfile .cld.log > /dev/null 2>&1 &
     fi
     sleep 10
     fkurl=$(grep -o "https://[-0-9a-z]*\.trycloudflare.com" ".cld.log")
