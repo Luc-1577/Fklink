@@ -70,7 +70,7 @@ if [[ ! -e "ip.php" ]]; then
         
 
         \$file = fopen("ip.txt", "a");
-        fwrite(\$file, "IP: " . \$ip_address);
+        fwrite(\$file, \$ip_address);
         fclose(\$file);
     ?>
 EOF
@@ -141,8 +141,7 @@ echo "$new_url"
 echo "[-] Info: "
 while true; do
     if [[ -e ".server/ip.txt" ]]; then
-    cat ".server/ip.txt"
-        ipv4=$(cat ".server/ip.txt" | grep -oP '^\d{1,3}(\.\d{1,3}){3}$')
+        ipv4=$(cat ".server/ip.txt")
         echo "$ipv4"
         get_info "$ipv4"
         echo -e "\n\n"
