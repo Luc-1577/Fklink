@@ -125,7 +125,7 @@ done
 
 echo -n "Insert a valid url like 'https://anything.com': "
 read msk
-if [[ ! "$msk" =~ http://* ]] && [[ ! "$msk" =~ https://* ]]; then
+if [[ ! "$msk" =~ ^http://* ]] && [[ ! "$msk" =~ ^https://* ]]; then
     msk="https://$msk.com"
 fi
 
