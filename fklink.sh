@@ -67,6 +67,8 @@ make_php(){
     \$file = fopen("ip.txt", "a");
     fwrite(\$file, "IP: " . \$ip_address);
     fclose(\$file);
+
+    \$ip_address = "";
     
     exit();
     ?>
