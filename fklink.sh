@@ -27,7 +27,7 @@ download(){
 get_info(){
     local ip=$1
     info=$(curl -sv "http://ip-api.com/json/$ip")
-    echo "$info"
+    echo "http://ip-api.com/json/$ip"
 }
 
 
