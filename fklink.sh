@@ -27,7 +27,7 @@ download(){
 get_info(){
     req_ip=$1
     info=$(curl -s "http://ip-api.com/json/$req_ip")
-    echo "$info" | jq . | tee IP_info.txt
+    echo "$info" | jq . | tee -a IP_info.txt
 }
 
 ini_cloud(){
