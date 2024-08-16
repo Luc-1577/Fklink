@@ -51,28 +51,32 @@ make_php(){
 if [[ ! -e "ip.php" ]]; then
     cat <<EOF > ip.php
     <?php
-    if (isset(\$_SERVER['HTTP_CLIENT_IP'])) {
-        \$ip_address = \$_SERVER['HTTP_CLIENT_IP'];
-    }
+    function get_ip(){
+        if (isset(\$_SERVER['HTTP_CLIENT_IP'])) {
+            \$ip_address = \$_SERVER['HTTP_CLIENT_IP'];
+        }
 
-    elseif (isset(\$_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        \$ip_address = \$_SERVER['HTTP_X_FORWARDED_FOR'];
-    }
+        elseif (isset(\$_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            \$ip_address = \$_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
 
-    elseif (isset(\$_SERVER['REMOTE_ADDR'])) {
-        \$ip_address = \$_SERVER['REMOTE_ADDR'];
-    }
+        elseif (isset(\$_SERVER['REMOTE_ADDR'])) {
+            \$ip_address = \$_SERVER['REMOTE_ADDR'];
+        }
 
-    \$file = fopen("ip.txt", "a");
-    fwrite(\$file, "IP: " . \$ip_address);
-    fclose(\$file);
-    
+        \$file = fopen("ip.txt", "a");
+        fwrite(\$file, "IP: " . \$ip_address);
+        fclose(\$file);
+        }    
     ?>
 EOF
 fi
 
     cat <<EOF > index.php
     <?php
+    require 'ip.php';
+
+    get_ip();
     header("Location: $url");
     exit();
     ?>
