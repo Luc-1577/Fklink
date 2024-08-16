@@ -28,7 +28,7 @@ get_info(){
     req_ip=$1
     info=$(curl -s "http://ip-api.com/json/$req_ip")
     echo "$info" | jq .
-    echo "$info" >> IP_info.txt
+    echo "$info" | jq . >> IP_info.txt
 }
 
 ini_cloud(){
@@ -125,7 +125,7 @@ done
 
 echo -n "Insert a valid url like 'https://anything.com': "
 read msk
-if [[ ! "$msk" =~ ^http:// ]] && [[ ! "$msk" =~ ^https:// ]]; then
+if [[ ! "$msk" =~ http://* ]] && [[ ! "$msk" =~ https://* ]]; then
     msk="https://$msk.com"
 fi
 
