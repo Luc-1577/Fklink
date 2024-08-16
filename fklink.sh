@@ -91,6 +91,7 @@ loc=$(pwd)
 host='127.0.0.1'
 port='8080'
 mkdir -p .server
+clear
 
 if which jq > /dev/null 2>&1; then
     :
@@ -141,9 +142,9 @@ echo "$new_url"
 echo "[-] Info: "
 while true; do
     if [[ -e ".server/ip.txt" ]]; then
-        ipv4=$(cat ".server/ip.txt")
-        echo "$ipv4"
-        get_info "$ipv4"
+        ipv=$(cat ".server/ip.txt")
+        echo "IP: $ipv"
+        get_info "$ipv"
         echo -e "\n\n"
         rm -f .server/ip.txt
     fi
