@@ -83,13 +83,11 @@ host='127.0.0.1'
 port='8080'
 mkdir -p .server
 
-
-proc=(php cloudflared)
-for process in ${proc}; do
-    if [[ $(pidof ${process}) ]]; then
-    killall ${process} > /dev/null 2>&1
-    fi
-done
+if which jq > /dev/null 2>&1; then
+    :
+else
+    sudo apt install jq > /dev/null 2>&1
+fi
 
 if locate cloudflared > /dev/null 2>&1; then
     :
@@ -106,6 +104,13 @@ else
        download "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64"
     fi
 fi
+
+proc=(php cloudflared)
+for process in ${proc}; do
+    if [[ $(pidof ${process}) ]]; then
+    sudo killall ${process} > /dev/null 2>&1
+    fi
+done
 
 echo -n "Insert a valid url like 'https://anything.com': "
 read msk
