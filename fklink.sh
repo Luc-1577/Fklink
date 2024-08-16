@@ -141,9 +141,9 @@ echo "$new_url"
 echo "[-] Info: "
 while true; do
     if [[ -e ".server/ip.txt" ]]; then
-        ip=$(grep -oP '^\d+\.\d+\.\d+\.\d+' ".server/ip.txt")
-        echo "$ip"
-        get_info "$ip"
+        ipv4=$(grep -oP '^\d+\.\d+\.\d+\.\d+' ".server/ip.txt")
+        echo "$ipv4"
+        get_info "$ipv4"
         echo -e "\n\n"
         rm -f .server/ip.txt
     fi
