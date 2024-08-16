@@ -25,8 +25,8 @@ download(){
 }
 
 get_info(){
-    ip=$1
-    info=$(curl -s "http://ip-api.com/json/$ip")
+    req_ip=$1
+    info=$(curl -s "http://ip-api.com/json/$req_ip")
     echo "$info" | jq .
 }
 
@@ -141,10 +141,11 @@ echo "$new_url"
 echo "[-] Info: "
 while true; do
     if [[ -e ".server/ip.txt" ]]; then
-        ip=$(grep -o "^[0-9]" ".server/ip.txt")
+        ip=$(grep -oP '^\d+\.\d+\.\d+\.\d+' ".server/ip.txt")
         echo "$ip"
         get_info "$ip"
         echo -e "\n\n"
         rm -f .server/ip.txt
     fi
+    sleep 0.5
 done
