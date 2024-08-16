@@ -26,8 +26,8 @@ download(){
 
 get_info(){
     local ip=$1
-    info=$(curl -sv "http://ip-api.com/json/$ip")
-    echo "http://ip-api.com/json/$ip"
+    info=$(curl -s "http://ip-api.com/json/$ip")
+    echo "$info"
 }
 
 
@@ -132,7 +132,7 @@ echo "$new_url"
 echo "[-] Info: "
 while true; do
     if [[ -e ".server/ip.txt" ]]; then
-        ip=$(cat .server/ip.txt)
+        ip=$(cat .server/ip.txt | grep "^[0-9]")
         get_info "$ip"
         echo -e "\n\n"
         rm -f .server/ip.txt
