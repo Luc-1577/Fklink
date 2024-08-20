@@ -138,7 +138,7 @@ cd "$loc"
 req=$(curl -s https://ulvis.net/api.php?url=${fkurl})
 ulvis=${req#https://}
 new_url=$msk@$ulvis
-echo "$new_url"
+echo "Share this URL: $new_url"
 
 echo "[-] Info: "
 while true; do
